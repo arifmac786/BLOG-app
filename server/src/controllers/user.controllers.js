@@ -53,4 +53,15 @@ export const signin = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "user login successfully", { data, token }));
 });
 
-export const signout = asyncHandler(async (req, res) => {});
+export const signout = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  console.log(req.user);
+  if (!user) {
+    throw new ApiError(401, "User not found");
+  }
+
+  return res
+    .status(200)
+    .clearCookie("token", { httpOnly: true })
+    .json(new ApiResponse(200, "user logout successfully ", {}));
+});
