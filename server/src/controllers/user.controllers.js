@@ -52,3 +52,5 @@ export const signin = asyncHandler(async (req, res) => {
     .cookie("token", token, { httpOnly: true })
     .json(new ApiResponse(200, "user login successfully", { data, token }));
 });
+
+export const signout = asyncHandler(async (req, res) => {});
