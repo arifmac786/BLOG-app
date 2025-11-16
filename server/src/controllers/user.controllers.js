@@ -65,3 +65,9 @@ export const signout = asyncHandler(async (req, res) => {
     .clearCookie("token", { httpOnly: true })
     .json(new ApiResponse(200, "user logout successfully ", {}));
 });
+
+export const getUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "user fetched succesfully", req.user));
+});
