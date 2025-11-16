@@ -8,12 +8,15 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdCreate } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import ProfileLeftMenu from "../components/ProfileLeftMenu";
+import ProfileRight from "../components/ProfileRight";
+import ProfileContent from "../components/ProfileContent";
 
 const Profile = () => {
   return (
-    <>
+    <div className="w-full min-h-screen flex  ">
       <ProfileLeftMenu />
-    </>
+      <ProfileRight />
+    </div>
   );
 };
 
