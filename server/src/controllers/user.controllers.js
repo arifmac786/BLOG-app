@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
 
 export const signup = asyncHandler(async (req, res) => {
   const { name, username, email, password } = req.body;
@@ -15,11 +16,20 @@ export const signup = asyncHandler(async (req, res) => {
     throw new ApiError(401, "user already exists with this email/username");
   }
 
+  const localFilePath = req.file?.path;
+
+  const avatar = await uploadOnCloudinary(localFilePath);
+  console.log(avatar);
+  if (!avatar) {
+    throw new ApiError(400, "avatar uploading ERROR");
+  }
+
   const user = await User.create({
     name,
     username,
     email,
     password,
+    avatar: avatar?.secure_url,
   });
 
   const data = await User.findById(user._id).select("-password");

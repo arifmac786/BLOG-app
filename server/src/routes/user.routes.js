@@ -6,10 +6,11 @@ import {
   signup,
 } from "../controllers/user.controllers.js";
 import { verifyJWT } from "../middlewares/verifyJWT.js";
+import upload from "../middlewares/multer.js";
 
 const router = express.Router();
 
-router.route("/signup").post(signup);
+router.route("/signup").post(upload.single("avatar"), signup);
 router.route("/signin").post(signin);
 
 // secure routes
