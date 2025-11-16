@@ -31,3 +31,24 @@ export const signup = asyncHandler(async (req, res) => {
     .cookie("token", token, { httpOnly: true })
     .json(new ApiResponse(201, "user register successfully", { data, token }));
 });
+
+export const signin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new ApiError(400, "User does not exist");
+  }
+
+  const comparePassword = await user.comparePassword(password);
+  if (!comparePassword) {
+    throw new ApiError(400, "Invalid Password");
+  }
+  const data = await User.findById(user._id).select("-password");
+  const token = data.generateAuthToken();
+
+  return res
+    .status(200)
+    .cookie("token", token, { httpOnly: true })
+    .json(new ApiResponse(200, "user login successfully", { data, token }));
+});
