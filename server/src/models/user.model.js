@@ -42,7 +42,7 @@ userSchema.methods.comparePassword = async function (plainPassword) {
 };
 
 userSchema.methods.generateAuthToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
       _id: this._id,
     },

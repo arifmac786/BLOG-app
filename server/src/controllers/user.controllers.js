@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 import ApiError from "../utils/ApiError.js";
-import ApiResponse from "../utils/ApiResponse";
+import ApiResponse from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 export const signup = asyncHandler(async (req, res) => {
@@ -8,7 +8,9 @@ export const signup = asyncHandler(async (req, res) => {
   if (!name || !username || !email || !password) {
     throw new ApiError(400, "All fields are required");
   }
-  const existUser = await User.findOne([{ email }, { username }]);
+  const existUser = await User.findOne({
+    $or: [{ email }, { username }],
+  });
   if (existUser) {
     throw new ApiError(401, "user already exists with this email/username");
   }
@@ -20,8 +22,9 @@ export const signup = asyncHandler(async (req, res) => {
     password,
   });
 
-  const data = await User.findById(user._id).select("password");
+  const data = await User.findById(user._id).select("-password");
   const token = data.generateAuthToken();
+  console.log(token);
 
   return res
     .status(201)
