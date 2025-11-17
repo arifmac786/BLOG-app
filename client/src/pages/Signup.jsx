@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { FaImagePortrait } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,25 +12,50 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [file, setFile] = useState("");
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showEye, setShowEye] = useState(false);
 
-  let obj = {
-    name,
-    username,
-    email,
-    password,
-    file,
+  const formData = new FormData();
+
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("username", username);
+  formData.append("password", password);
+  formData.append("avatar", file);
+
+  const handleFile = (e) => {
+    console.log(e.target.files?.[0]);
+    setFile(e.target.files?.[0]);
+    const url = URL.createObjectURL(file);
+    console.log(url);
+    setPreview(url);
   };
-  // const handleFile = (e) => {
-  //   console.log(e.target.files[0]);
-  //   setFile(e.target.files[0].name);
-  //   const url = URL.createObjectURL(file);
-  //   console.log(url);
-  //   setPreview(url);
-  // };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(obj, "hjk");
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user/signup",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setEmail("");
+      setName("");
+      setUsername("");
+      setPassword("");
+      setFile("");
+      setLoading(false);
+      console.log(response);
+    } catch (error) {
+      console.log("Sign up Error", error);
+      setLoading(false);
+    }
   };
   return (
     <div className="w-full min-h-screen flex items-center justify-center shadow border">
@@ -65,7 +92,7 @@ const Signup = () => {
             />
             <input
               type="file"
-              className="border border-gray-900/20 px-2 py-3 rounded-xl"
+              className="border border-gray-900/20 px-2 py-3 cursor-pointer rounded-xl"
               onChange={handleFile}
             />
           </div>
@@ -79,8 +106,8 @@ const Signup = () => {
               placeholder="Enter your username..."
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-white 
-             outline-none focus:bg-gray-900 transition duration-200
+              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-black 
+             outline-none  transition duration-200
              placeholder-gray-500"
             />
           </div>
@@ -94,8 +121,9 @@ const Signup = () => {
               placeholder="Enter your username..."
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-white 
-             outline-none focus:bg-gray-900 transition duration-200
+              required
+              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-black 
+             outline-none  transition duration-200
              placeholder-gray-500"
             />
           </div>
@@ -105,12 +133,12 @@ const Signup = () => {
 
           <div className="p-[2px] rounded-xl bg-gradient-to-r from-purple-500 to-pink-500">
             <input
-              type="text"
+              type="email"
               placeholder="Enter your username..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-white 
-             outline-none focus:bg-gray-900 transition duration-200
+              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-black 
+             outline-none  transition duration-200
              placeholder-gray-500"
             />
           </div>
@@ -118,23 +146,30 @@ const Signup = () => {
             Password
           </label>
 
-          <div className="p-[2px] rounded-xl bg-gradient-to-r from-purple-500 to-pink-500">
+          <div className="p-[2px] relative rounded-xl bg-gradient-to-r from-purple-500 to-pink-500">
             <input
-              type="text"
+              type={showEye ? "text" : "password"}
               placeholder="Enter your username..."
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-white 
-             outline-none focus:bg-gray-900 transition duration-200
+              className="w-full px-4 py-3 rounded-xl bg-gray-300/100 text-black 
+             outline-none  transition duration-200
              placeholder-gray-500"
             />
+            <div
+              className="absolute right-4 top-3 cursor-pointer"
+              onClick={() => setShowEye((prev) => !prev)}
+            >
+              {showEye ? <FaEye size={25} /> : <FaEyeSlash size={25} />}
+            </div>
           </div>
           <button
             className="px-6 cursor-pointer mt-6 py-3 rounded-xl font-semibold text-white 
   bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
   hover:opacity-90 transition-all duration-200 shadow-lg"
           >
-            Sign Up
+            {loading ? <ClipLoader size={25} color="white" /> : "Sign Up"}
           </button>
           <p className="text-sm text-center text-gray-400">
             Already have an account?
