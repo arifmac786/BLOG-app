@@ -8,6 +8,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdCreate } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
+import Logout from "./Logout";
 
 const ProfileLeftMenu = () => {
   const menuItems = [
@@ -46,12 +47,7 @@ const ProfileLeftMenu = () => {
             <p className="text-2xl">{elem.name}</p>
           </div>
         ))}
-        <div className="flex items-center gap-4 cursor-pointer">
-          <p className="text-2xl text-red-500 font-black">
-            <CiLogout />
-          </p>
-          <p className="text-2xl text-red-500">Logout</p>
-        </div>
+        <Logout />
       </div>
     </div>
   );

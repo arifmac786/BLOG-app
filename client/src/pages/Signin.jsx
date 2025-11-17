@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { login, logout } from "../store/authSlice";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -26,10 +29,12 @@ const Signin = () => {
       setPassword("");
       console.log(response.data.data);
       setLoading(false);
+      dispatch(login(response.data.data));
       navigate("/");
     } catch (error) {
       console.log("Signin ERROR", error);
       setLoading(false);
+      dispatch(logout());
     }
   };
   return (

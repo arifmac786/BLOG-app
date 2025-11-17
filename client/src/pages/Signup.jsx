@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { FaImagePortrait } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login, logout } from "../store/authSlice";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -14,6 +16,9 @@ const Signup = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFile = (e) => {
     console.log(e.target.files?.[0]);
@@ -54,10 +59,13 @@ const Signup = () => {
       setPassword("");
       setFile("");
       setLoading(false);
+      navigate("/");
+      dispatch(login(response.data.data));
       console.log(response);
     } catch (error) {
       console.log("Sign up Error", error);
       setLoading(false);
+      dispatch(logout());
     }
   };
   return (
