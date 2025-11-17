@@ -15,18 +15,12 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [showEye, setShowEye] = useState(false);
 
-  const formData = new FormData();
-
-  formData.append("name", name);
-  formData.append("email", email);
-  formData.append("username", username);
-  formData.append("password", password);
-  formData.append("avatar", file);
-
   const handleFile = (e) => {
     console.log(e.target.files?.[0]);
-    setFile(e.target.files?.[0]);
-    const url = URL.createObjectURL(file);
+    const l = e.target.files?.[0];
+    if (!l) return;
+    setFile(l);
+    const url = URL.createObjectURL(l);
     console.log(url);
     setPreview(url);
   };
@@ -35,6 +29,15 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+      if (file) {
+        // IMPORTANT: field name "avatar" must match multer config on server
+        formData.append("avatar", file);
+      }
       const response = await axios.post(
         "http://localhost:5000/api/user/signup",
         formData,
