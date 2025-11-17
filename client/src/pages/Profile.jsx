@@ -13,7 +13,7 @@ import ProfileContent from "../components/ProfileContent";
 
 const Profile = () => {
   return (
-    <div className="w-full min-h-screen flex  ">
+    <div className="w-full  min-h-screen flex  ">
       <ProfileLeftMenu />
       <ProfileRight />
     </div>

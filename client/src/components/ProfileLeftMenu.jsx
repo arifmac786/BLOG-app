@@ -22,7 +22,7 @@ const ProfileLeftMenu = () => {
   ];
 
   return (
-    <div className="w-[25%] h-screen fixed border border-r-2 border-gray-500/10  ">
+    <div className="w-[25%] hidden lg:block h-screen fixed border border-r-2 border-gray-500/10  ">
       <div className="w-full px-18 pt-14 flex items-end gap-1">
         {" "}
         <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 inline rounded text-white font-black ">

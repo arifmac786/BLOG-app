@@ -5,7 +5,7 @@ import ProfileRightBottom from "./ProfileRightBottom";
 
 const ProfileRight = () => {
   return (
-    <div className="w-[75%] ml-[25%] min-h-screen   p-8 mx-8 overflow-auto">
+    <div className="lg:w-[75%] w-full lg:ml-[25%] min-h-screen p-2  sm:p-8 sm:mx-8 overflow-auto">
       <ProfileRightTop />
       <ProfileRightBottom />
     </div>
