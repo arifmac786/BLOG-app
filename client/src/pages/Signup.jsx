@@ -52,7 +52,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-blue-400">
+    <div className="w-full min-h-screen flex items-center justify-center shadow border">
       <div className="w-full p-6 bg-white max-w-lg ">
         <div className="flex gap-1 items-end ">
           {" "}

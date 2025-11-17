@@ -38,7 +38,10 @@ const ProfileLeftMenu = () => {
       </div>
       <div className="px-18 pt-16 flex flex-col gap-10">
         {menuItems.map((elem) => (
-          <div className="flex items-center gap-4 cursor-pointer">
+          <div
+            key={elem.name}
+            className="flex items-center gap-4 cursor-pointer"
+          >
             <p className="text-2xl">{elem.icon}</p>
             <p className="text-2xl">{elem.name}</p>
           </div>

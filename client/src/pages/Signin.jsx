@@ -4,7 +4,7 @@ import { ClipLoader } from "react-spinners";
 
 const Signin = () => {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-blue-400">
+    <div className="w-full min-h-screen flex items-center justify-center  ">
       <div className="w-full p-6 bg-white max-w-lg ">
         <div className="flex gap-1 items-end ">
           {" "}
