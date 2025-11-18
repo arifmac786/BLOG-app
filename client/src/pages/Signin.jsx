@@ -27,9 +27,9 @@ const Signin = () => {
       );
       setEmail("");
       setPassword("");
-      console.log(response.data.data);
+      console.log(response.data.data.data);
       setLoading(false);
-      dispatch(login(response.data.data));
+      dispatch(login(response.data.data.data));
       navigate("/");
     } catch (error) {
       console.log("Signin ERROR", error);

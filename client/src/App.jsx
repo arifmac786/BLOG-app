@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { login, logout } from "./store/authSlice";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -39,9 +40,31 @@ const App = () => {
   return (
     <div className="w-full min-h-screen flex   ">
       <Routes>
-        <Route path="/" element={<Profile />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoutes>
+              <Profile />{" "}
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <ProtectedRoutes>
+              <Signup />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <ProtectedRoutes>
+              {" "}
+              <Signin />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </div>
   );

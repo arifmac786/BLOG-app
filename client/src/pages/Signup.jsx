@@ -59,8 +59,8 @@ const Signup = () => {
       setPassword("");
       setFile("");
       setLoading(false);
+      dispatch(login(response.data.data.data));
       navigate("/");
-      dispatch(login(response.data.data));
       console.log(response);
     } catch (error) {
       console.log("Sign up Error", error);
