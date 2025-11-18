@@ -41,7 +41,10 @@ export const createPost = asyncHandler(async (req, res) => {
 export const getPost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
 
-  const post = await Post.findById(postId);
+  const post = await Post.findById(postId).populate(
+    "author",
+    "name email avatar username"
+  );
   if (!post) {
     throw new ApiError(400, "post not found");
   }
@@ -50,4 +53,16 @@ export const getPost = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "get post successfully", post));
 });
-export const getPosts = asyncHandler(async (req, res) => {});
+export const getPosts = asyncHandler(async (req, res) => {
+  const post = await Post.find().populate(
+    "author",
+    "name email avatar username"
+  );
+  if (!post) {
+    throw new ApiError(400, "post not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "get post successfully", post));
+});
