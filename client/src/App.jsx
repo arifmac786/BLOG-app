@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { login, logout } from "./store/authSlice";
 import ProtectedRoutes from "./ProtectedRoutes";
+import CreatePost from "./pages/createPost";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -62,6 +63,14 @@ const App = () => {
             <ProtectedRoutes>
               {" "}
               <Signin />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoutes>
+              <CreatePost />
             </ProtectedRoutes>
           }
         />

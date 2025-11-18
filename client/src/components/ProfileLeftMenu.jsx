@@ -9,17 +9,18 @@ import { IoMdCreate } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import Logout from "./Logout";
+import { Link } from "react-router-dom";
 
 const ProfileLeftMenu = () => {
   const menuItems = [
-    { name: "Home", icon: <GrHomeRounded /> },
-    { name: "Search", icon: <CiSearch /> },
-    { name: "Explore", icon: <MdOutlineExplore /> },
-    { name: "Reels", icon: <BsCameraReels /> },
-    { name: "Messages", icon: <FiMessageSquare /> },
-    { name: "Notification", icon: <IoMdHeartEmpty /> },
-    { name: "Create", icon: <IoMdCreate /> },
-    { name: "Profile", icon: <CgProfile /> },
+    { name: "Home", icon: <GrHomeRounded />, url: "/home" },
+    { name: "Search", icon: <CiSearch />, url: "/home" },
+    { name: "Explore", icon: <MdOutlineExplore />, url: "/home" },
+    { name: "Reels", icon: <BsCameraReels />, url: "/home" },
+    { name: "Messages", icon: <FiMessageSquare />, url: "/home" },
+    { name: "Notification", icon: <IoMdHeartEmpty />, url: "/home" },
+    { name: "Create", icon: <IoMdCreate />, url: "/create" },
+    { name: "Profile", icon: <CgProfile />, url: "/home" },
   ];
 
   return (
@@ -39,13 +40,14 @@ const ProfileLeftMenu = () => {
       </div>
       <div className="px-18 pt-16 flex flex-col gap-10">
         {menuItems.map((elem) => (
-          <div
+          <Link
             key={elem.name}
             className="flex items-center gap-4 cursor-pointer"
+            to={elem.url}
           >
             <p className="text-2xl">{elem.icon}</p>
             <p className="text-2xl">{elem.name}</p>
-          </div>
+          </Link>
         ))}
         <Logout />
       </div>
