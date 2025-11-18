@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { addPost, deletePost } from "../store/postSlice";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -8,6 +11,9 @@ const CreatePost = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -32,7 +38,9 @@ const CreatePost = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.data);
+        dispatch(addPost(res.data.data));
+        navigate("/");
         setLoading(false);
         setTitle("");
         setContent("");

@@ -30,7 +30,10 @@ export const createPost = asyncHandler(async (req, res) => {
     author: authorId,
   });
 
-  const post = await Post.findById(createPost._id);
+  const post = await Post.findById(createPost._id).populate(
+    "author",
+    "name username email avatar"
+  );
   if (!post) {
     throw new ApiError(401, "post did not create");
   }
