@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
-const postSchema = new mongoose.connect(
+const postSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
     },
-    description: {
+    content: {
       type: String,
     },
     postImage: {
       type: String,
-      required,
+      required: true,
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
