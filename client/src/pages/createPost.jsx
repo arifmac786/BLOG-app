@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { addProfile } from "../store/userProfileSlice";
+import { addPost } from "../store/postSlice";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -27,8 +28,31 @@ const CreatePost = () => {
   formData.append("content", content);
   formData.append("postImage", image);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setLoading(true);
+
     console.log(e);
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/post",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data.data);
+      dispatch(addPost(response.data.data));
+      setLoading(false);
+      setTitle("");
+      setImage(null);
+      setPreview(null);
+      setContent("");
+      navigate("/");
+    } catch (error) {
+      console.log("Post creation ERROr", error);
+      setLoading(false);
+    }
   };
   return (
     <div className="max-w-3xl mx-auto p-6">
