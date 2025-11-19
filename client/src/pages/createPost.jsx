@@ -28,32 +28,8 @@ const CreatePost = () => {
   formData.append("postImage", image);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    axios
-      .post("http://localhost:5000/api/post", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "/multipart-formdata",
-        },
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        navigate("/");
-        setLoading(false);
-        setTitle("");
-        setContent("");
-        setImage(null);
-        setPreview(null);
-      })
-      .catch((err) => {
-        console.log("POst ERROR", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    console.log(e);
   };
-
   return (
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Create New Post</h1>

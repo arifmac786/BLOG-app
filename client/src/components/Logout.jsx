@@ -4,6 +4,7 @@ import { CiLogout } from "react-icons/ci";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../store/authSlice";
+import { removePosts } from "../store/postSlice";
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Logout = () => {
 
       console.log(response);
       dispatch(logout());
+      dispatch(removePosts());
       navigate("/signin");
     } catch (error) {
       console.log("Logout Error", error);

@@ -9,12 +9,14 @@ import { login, logout } from "./store/authSlice";
 import ProtectedRoutes from "./ProtectedRoutes";
 import CreatePost from "./pages/createPost";
 import { addProfile, removeProfile } from "./store/userProfileSlice";
-import { addPost } from "./store/postSlice";
+import { addPosts } from "./store/postSlice";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const { post } = useSelector((state) => state.posts);
+  const { status } = useSelector((state) => state.auth);
+  console.log(status);
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/user", { withCredentials: true })
@@ -35,32 +37,20 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/user/get-profile", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        dispatch(addProfile(res.data.data));
-      })
-      .catch((err) => {
-        console.log("Get Profile ERROR", err);
-        dispatch(removeProfile());
-        dispatch(logout());
-      })
-      .finally(() => {
-        console.log("DONE");
-      });
-  }, [post]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/post", { withCredentials: true })
-      .then((res) => {
-        console.log("ghjkhgjhk", res.data.data);
-        dispatch(addPost(res.data.data));
-      });
-  }, [post]);
+    function fetchPosts() {
+      if (!status) return null;
+      axios
+        .get("http://localhost:5000/api/post", { withCredentials: true })
+        .then((postData) => {
+          dispatch(addPosts(postData.data.data));
+          console.log("kya ho raha hai", postData);
+        })
+        .catch((err) => {
+          console.log("Post getting ERROR", err);
+        });
+    }
+    fetchPosts();
+  }, [status]);
 
   if (loading) {
     return (

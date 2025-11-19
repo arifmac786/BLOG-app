@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const ProfileRightBottom = () => {
-  const { profile } = useSelector((state) => state.profile);
+  const { posts } = useSelector((state) => state.posts);
+  console.log("PRR", posts);
 
   return (
     <div className=" w-full       pt-5">
@@ -14,7 +15,7 @@ const ProfileRightBottom = () => {
         <p className="text-xl uppercase hover:text-black text-gray-600">reel</p>
       </div>
       <div className="main   w-full p-4 mt-3 flex flex-wrap justify-center sm:justify-around gap-2  border-gray-900/10 border-t-1 ">
-        {profile.postDetails.map((post) => (
+        {posts.map((post) => (
           <div
             key={post._id}
             className="w-full sm:w-50 sm:h-65 lg:w-60 lg:h-75      p-1 "
