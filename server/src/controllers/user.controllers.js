@@ -81,3 +81,50 @@ export const getUser = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, "user fetched succesfully", req.user));
 });
+
+export const getUserProfile = asyncHandler(async (req, res) => {
+  const userId = req.user?._id;
+
+  const UserProfile = await User.aggregate([
+    {
+      $match: {
+        _id: userId,
+      },
+    },
+    {
+      $lookup: {
+        from: "posts",
+        localField: "_id",
+        foreignField: "author",
+        as: "postDetails",
+      },
+    },
+    {
+      $addFields: {
+        totalPost: {
+          $size: "$postDetails",
+        },
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        email: 1,
+        username: 1,
+        avatar: 1,
+        postDetails: 1,
+        totalPost: 1,
+      },
+    },
+  ]);
+
+  console.log(UserProfile);
+
+  if (!UserProfile?.length) {
+    throw new ApiError(400, "User not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Fetched user profile", UserProfile));
+});

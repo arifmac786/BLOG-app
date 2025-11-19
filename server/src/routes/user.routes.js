@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getUser,
+  getUserProfile,
   signin,
   signout,
   signup,
@@ -16,5 +17,6 @@ router.route("/signin").post(signin);
 // secure routes
 router.route("/signout").post(verifyJWT, signout);
 router.route("/").get(verifyJWT, getUser);
+router.route("/get-profile").get(verifyJWT, getUserProfile);
 
 export default router;
