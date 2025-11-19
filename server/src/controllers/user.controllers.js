@@ -126,5 +126,5 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "Fetched user profile", UserProfile));
+    .json(new ApiResponse(200, "Fetched user profile", UserProfile[0]));
 });

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { addPost, deletePost } from "../store/postSlice";
+import { addProfile } from "../store/userProfileSlice";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");

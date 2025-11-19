@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 
 const ProfileRightTop = () => {
   const userData = useSelector((state) => state.auth.userData);
-  console.log("Mount ", userData);
-  useEffect(() => {
-    console.log("profile userData changed:", userData);
-  }, [userData]);
+  const { profile } = useSelector((state) => state.profile);
+
+  console.log("Mount ", profile.totalPost);
+  useEffect(() => {}, [userData]);
 
   if (!userData) {
     return <h1>Loading...</h1>;
@@ -26,7 +26,7 @@ const ProfileRightTop = () => {
       <div className="lg:ml-22 flex flex-col items-center  sm:items-start     grow-1  ">
         <p className="text-2xl sm:text-3xl">{userData?.username}</p>
         <div className="flex  items-center gap-10 sm:text-sm mt-3 md:text-xl text-sm sm:mt-6">
-          <div className="font-bold">271 posts</div>
+          <div className="font-bold">{profile.totalPost} posts</div>
           <div className="font-bold">98k followers</div>
           <div className="font-bold">12 following</div>
         </div>
