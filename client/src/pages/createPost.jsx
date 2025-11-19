@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { addPost, deletePost } from "../store/postSlice";
 import { addProfile } from "../store/userProfileSlice";
 
 const CreatePost = () => {
@@ -40,7 +39,6 @@ const CreatePost = () => {
       })
       .then((res) => {
         console.log(res.data.data);
-        dispatch(addPost(res.data.data));
         navigate("/");
         setLoading(false);
         setTitle("");
