@@ -57,7 +57,8 @@ export const getPost = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "get post successfully", post));
 });
 export const getPosts = asyncHandler(async (req, res) => {
-  const post = await Post.find().populate(
+  const userId = req.user._id;
+  const post = await Post.find({ author: userId }).populate(
     "author",
     "name email avatar username"
   );

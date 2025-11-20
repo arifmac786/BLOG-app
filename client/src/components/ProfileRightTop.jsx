@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "./Logout";
 import { useSelector } from "react-redux";
 
@@ -12,7 +12,6 @@ const ProfileRightTop = () => {
 
   return (
     <div className="w-full  py-4    border-b-2 border-gray-600/10  pt-16 flex  items-center flex-col sm:flex-row gap-7">
-      <Logout />
       <div className="flex-none w-[200px] h-[200px] p-1 sm:w-[270px] sm:h-[270px]   bg-gradient-to-br from-fuchsia-500 via-purple-600 to-blue-500 rounded-full overflow-hidden">
         <img
           src={userData?.avatar}
