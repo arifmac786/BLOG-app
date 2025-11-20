@@ -17,19 +17,18 @@ const Profile = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleMenuToggle = (e) => {
-    e.preventDefault();
-    console.log("click");
+    e.stopPropagation();
+    setShowMenu(false);
   };
   return (
     <div className="w-full  min-h-screen flex  ">
       <div
-        className="lg:hidden w-full absolute top-5 right-5 "
-        onClick={handleMenuToggle}
+        className={`lg:hidden ${showMenu ? "w-full" : ""}fixed top-5 right-5`}
       >
         {showMenu ? (
           <MenuForSm handleMenuToggle={handleMenuToggle} />
         ) : (
-          <IoMdMenu onClick={handleMenuToggle} size={30} />
+          <IoMdMenu onClick={() => setShowMenu(true)} color="black" size={35} />
         )}
       </div>
 
