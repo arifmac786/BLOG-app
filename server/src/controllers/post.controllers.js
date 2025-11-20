@@ -58,10 +58,9 @@ export const getPost = asyncHandler(async (req, res) => {
 });
 export const getPosts = asyncHandler(async (req, res) => {
   const userId = req.user._id;
-  const post = await Post.find({ author: userId }).populate(
-    "author",
-    "name email avatar username"
-  );
+  const post = await Post.find({ author: userId })
+    .sort({ createdAt: -1 })
+    .populate("author", "name email avatar username");
   if (!post) {
     throw new ApiError(400, "post not found");
   }
